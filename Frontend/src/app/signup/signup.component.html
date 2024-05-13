@@ -1,0 +1,69 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row fxLayout="row">
+    <span>SignUp</span>
+    <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="signupForm">
+    <div fxFlex fxLayout="column">
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="signupForm.get('name').hasError('required')">This field is mandatory</mat-error>
+        <mat-error *ngIf="signupForm.get('name').hasError('pattern')">This field is invalid</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Contact Number</mat-label>
+        <input matInput formControlName="contactNumber" required>
+        <mat-error *ngIf="signupForm.get('contactNumber').hasError('required')">This field is mandatory</mat-error>
+        <mat-error *ngIf="signupForm.get('contactNumber').hasError('pattern')">This field is invalid</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required>
+        <mat-error *ngIf="signupForm.get('email').hasError('required')">This field is mandatory</mat-error>
+        <mat-error *ngIf="signupForm.get('email').hasError('pattern')">This field is invalid</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" required [type]="password ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="password = !password" [attr.aria-label]="'Toggle ' + (password ? 'visibility' : 'hide')">
+          <mat-icon>{{ password ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="signupForm.get('password').hasError('required')">This field is mandatory</mat-error>
+        <mat-error *ngIf="signupForm.get('password').hasError('pattern')">This field is invalid</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Confirm Password</mat-label>
+        <input matInput formControlName="confirmPassword" required [type]="confirmPassword ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="confirmPassword = !confirmPassword" [attr.aria-label]="'Toggle ' + (confirmPassword ? 'visibility' : 'hide')">
+          <mat-icon>{{ confirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">This field is mandatory</mat-error>
+        <mat-error *ngIf="signupForm.get('confirmPassword').hasError('pattern')">This field is invalid</mat-error>
+        <mat-hint *ngIf="ValidateSubmit() && !(signupForm.controls.confirmPassword.invalid)">
+          <span>New password and confirm password do not match</span>
+        </mat-hint>
+      </mat-form-field>
+
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()" [disabled]="ValidateSubmit() || !(signupForm.valid && signupForm.dirty)">
+    <mat-icon>save</mat-icon> SignUp
+  </button>
+  <button mat-raised-button color="warn" mat-dialog-close>
+    <mat-icon>cancel</mat-icon> Close
+  </button>
+</mat-dialog-actions>
+
